@@ -502,15 +502,19 @@ section { padding-block: var(--section-py); }
 }
 
 .steps {
-  display: grid; grid-template-columns: repeat(4,1fr);
-  gap: 2.5rem; position: relative; margin-bottom: 4rem;
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 2.5rem; position: relative; margin-bottom: 3rem;
 }
 .steps::before {
-  content: ''; position: absolute; top: 2rem; left: 12.5%; width: 75%;
+  content: ''; position: absolute; top: 2rem; left: 16.5%; width: 67%;
   height: 1px; background: rgba(255,255,255,0.09);
 }
 
-.step { text-align: center; position: relative; }
+.step {
+  text-align: center; position: relative;
+  cursor: pointer; user-select: none;
+  transition: opacity var(--ease);
+}
 .step-num {
   width: 4rem; height: 4rem; border-radius: 50%;
   border: 1px solid rgba(255,255,255,0.15);
@@ -518,12 +522,101 @@ section { padding-block: var(--section-py); }
   margin: 0 auto 1.5rem;
   font-family: var(--font-head); font-size: 1.45rem; color: var(--silver-mid);
   background: var(--charcoal); position: relative; z-index: 1;
+  transition: background var(--ease), border-color var(--ease), color var(--ease);
 }
 .step h3 {
   font-family: var(--font-head); font-size: 1.2rem; font-weight: 400;
-  color: var(--white); margin-bottom: 0.5rem;
+  color: rgba(255,255,255,0.55); margin-bottom: 0.4rem;
+  transition: color var(--ease);
 }
-.step p { font-size: var(--fs-sm); color: rgba(255,255,255,0.45); font-weight: 300; line-height: 1.7; }
+.step-price {
+  display: block; font-size: var(--fs-sm); font-weight: 500;
+  color: rgba(255,255,255,0.3); letter-spacing: 0.06em;
+  margin-bottom: 0.4rem; transition: color var(--ease);
+}
+.step p { font-size: var(--fs-sm); color: rgba(255,255,255,0.3); font-weight: 300; line-height: 1.7; transition: color var(--ease); }
+
+.step-hint {
+  display: block; font-size: var(--fs-xs);
+  color: rgba(255,255,255,0.2); letter-spacing: 0.18em;
+  text-transform: uppercase; margin-bottom: 0.75rem;
+  transition: opacity var(--ease);
+}
+.step.selected .step-hint { opacity: 0; }
+
+/* Selected state */
+.step.selected .step-num {
+  background: var(--white); border-color: var(--white); color: var(--charcoal);
+}
+.step.selected h3 { color: var(--white); }
+.step.selected .step-price { color: rgba(255,255,255,0.75); }
+.step.selected p { color: rgba(255,255,255,0.55); }
+
+/* Shipping selector */
+.shipping-selector {
+  text-align: center; margin-bottom: 2.5rem;
+}
+.shipping-label {
+  font-size: var(--fs-xs); letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); margin-bottom: 1rem; font-weight: 400;
+}
+.shipping-options {
+  display: inline-flex; gap: 0; border: 1px solid rgba(255,255,255,0.12); border-radius: 2px;
+}
+.shipping-btn {
+  background: transparent; border: none; border-right: 1px solid rgba(255,255,255,0.12);
+  padding: 0.65rem 1.4rem; cursor: pointer;
+  font-family: var(--font-body); font-size: var(--fs-xs);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+  transition: background var(--ease), color var(--ease);
+}
+.shipping-btn:last-child { border-right: none; }
+.shipping-btn span {
+  font-size: 0.7rem; color: rgba(255,255,255,0.25);
+  letter-spacing: 0.06em; transition: color var(--ease);
+}
+.shipping-btn:hover { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.7); }
+.shipping-btn:hover span { color: rgba(255,255,255,0.5); }
+.shipping-btn.active {
+  background: rgba(255,255,255,0.1); color: var(--white);
+}
+.shipping-btn.active span { color: rgba(255,255,255,0.65); }
+
+/* Order summary */
+.order-summary {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 2.5rem; margin-top: 1rem;
+  text-align: center;
+}
+.order-summary-list {
+  list-style: none; margin: 0 auto 1.5rem;
+  max-width: 320px; min-height: 1.5rem;
+}
+.order-summary-list li {
+  display: flex; justify-content: space-between;
+  font-size: var(--fs-sm); color: rgba(255,255,255,0.6);
+  font-weight: 300; padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.order-summary-list li:last-child { border-bottom: none; }
+.order-summary-empty {
+  font-size: var(--fs-sm); color: rgba(255,255,255,0.25);
+  font-weight: 300; letter-spacing: 0.06em;
+}
+.order-total {
+  font-family: var(--font-head); font-size: 2rem; font-weight: 300;
+  color: var(--white); margin-bottom: 2rem; letter-spacing: 0.04em;
+}
+.order-total span { color: var(--silver-mid); font-size: 1rem; letter-spacing: 0.1em; display: block; margin-bottom: 0.2rem; font-family: var(--font-body); font-weight: 400; text-transform: uppercase; }
+
+.btn-checkout {
+  transition: background var(--ease), color var(--ease), box-shadow var(--ease), transform var(--ease), opacity var(--ease);
+}
+.btn-checkout.disabled {
+  opacity: 0.3; pointer-events: none; cursor: default;
+}
 
 @media (max-width: 760px) { .steps { grid-template-columns: 1fr 1fr; } .steps::before { display: none; } }
 @media (max-width: 460px) { .steps { grid-template-columns: 1fr; } }
@@ -945,33 +1038,52 @@ section { padding-block: var(--section-py); }
       <h2 class="sec-title">How to <em>Order</em></h2>
       <div class="divider divider-center" style="background:linear-gradient(90deg,transparent,#666,transparent);"></div>
     </div>
-    <p class="order-intro reveal">Your journey to brilliant silver starts here. Our team is with you every step of the way.</p>
+    <p class="order-intro reveal">Select the products you&rsquo;d like &mdash; then proceed to checkout. It&rsquo;s that simple.</p>
 
-    <div class="steps">
-      <div class="step reveal d1">
+    <div class="steps reveal">
+      <div class="step" data-price="50" data-name="Hair Serum" role="checkbox" aria-checked="false" tabindex="0">
+        <span class="step-hint">click to select</span>
         <div class="step-num">01</div>
-        <h3>Get in Touch</h3>
-        <p>Contact us via the form below or email us directly. Tell us what you&rsquo;re looking for and we&rsquo;ll guide you.</p>
+        <h3>Hair Serum</h3>
+        <span class="step-price">&euro;50</span>
+        <p>Eliminates yellow &amp; brassy tones for pure, luminous silver.</p>
       </div>
-      <div class="step reveal d2">
+      <div class="step" data-price="20" data-name="Hair Oil" role="checkbox" aria-checked="false" tabindex="0">
+        <span class="step-hint">click to select</span>
         <div class="step-num">02</div>
-        <h3>Personal Consultation</h3>
-        <p>We&rsquo;ll discuss your hair, your goals, and recommend the right products from our curated range.</p>
+        <h3>Hair Oil</h3>
+        <span class="step-price">&euro;20</span>
+        <p>Radiant finishing gloss essential for white &amp; silver hair.</p>
       </div>
-      <div class="step reveal d3">
+      <div class="step" data-price="30" data-name="Eyebrow Dye" role="checkbox" aria-checked="false" tabindex="0">
+        <span class="step-hint">click to select</span>
         <div class="step-num">03</div>
-        <h3>Place Your Order</h3>
-        <p>Order with confidence knowing every product is chosen specifically for you and your hair.</p>
-      </div>
-      <div class="step reveal d4">
-        <div class="step-num">04</div>
-        <h3>Delivered to Your Door</h3>
-        <p>Beautifully packaged and shipped directly to you, ready to transform your silver.</p>
+        <h3>Eyebrow Dye</h3>
+        <span class="step-price">&euro;30</span>
+        <p>Bold, striking brows to complement your fabulous silver.</p>
       </div>
     </div>
 
-    <div style="text-align:center;" class="reveal">
-      <a href="#contact" class="btn btn-light">Start Your Order</a>
+    <div class="shipping-selector reveal">
+      <p class="shipping-label">Shipping region</p>
+      <div class="shipping-options" role="radiogroup" aria-label="Shipping region">
+        <button class="shipping-btn" data-region="UK / Ireland" data-shipping="5" role="radio" aria-checked="false">UK / Ireland<span>&euro;5</span></button>
+        <button class="shipping-btn" data-region="Europe" data-shipping="5" role="radio" aria-checked="false">Europe<span>&euro;5</span></button>
+        <button class="shipping-btn" data-region="Other" data-shipping="8" role="radio" aria-checked="false">Other<span>&euro;8</span></button>
+      </div>
+    </div>
+
+    <div class="order-summary reveal">
+      <ul class="order-summary-list" id="order-summary-list">
+        <li class="order-summary-empty">No products selected yet</li>
+      </ul>
+      <div class="order-total" id="order-total">
+        <span>Total</span>
+        &euro;0
+      </div>
+      <a href="https://placeholder.com" class="btn btn-light btn-checkout disabled" id="checkout-btn" aria-disabled="true">
+        Proceed to Checkout
+      </a>
     </div>
   </div>
 </section>
@@ -1239,6 +1351,80 @@ section { padding-block: var(--section-py); }
       }
     });
   }
+
+  /* ── Order product selector ── */
+  var orderSteps    = document.querySelectorAll('.step[data-price]');
+  var shippingBtns  = document.querySelectorAll('.shipping-btn');
+  var summaryList   = document.getElementById('order-summary-list');
+  var orderTotal    = document.getElementById('order-total');
+  var checkoutBtn   = document.getElementById('checkout-btn');
+  var activeShipping = 0;
+  var activeRegion   = '';
+
+  function updateOrderSummary() {
+    var selected = [];
+    orderSteps.forEach(function (step) {
+      if (step.classList.contains('selected')) {
+        selected.push({ name: step.dataset.name, price: parseInt(step.dataset.price, 10) });
+      }
+    });
+
+    if (selected.length === 0) {
+      summaryList.innerHTML = '<li class="order-summary-empty">No products selected yet</li>';
+      orderTotal.innerHTML = '<span>Total</span>&euro;0';
+      checkoutBtn.classList.add('disabled');
+      checkoutBtn.setAttribute('aria-disabled', 'true');
+    } else {
+      var subtotal = 0;
+      var rows = selected.map(function (item) {
+        subtotal += item.price;
+        return '<li><span>' + item.name + '</span><span>&euro;' + item.price + '</span></li>';
+      });
+      if (activeShipping > 0) {
+        rows.push('<li><span>Shipping (' + activeRegion + ')</span><span>&euro;' + activeShipping + '</span></li>');
+      } else if (activeRegion === '') {
+        rows.push('<li style="justify-content:center;color:rgba(255,255,255,0.25);font-style:italic;">Select a shipping region above</li>');
+      }
+      summaryList.innerHTML = rows.join('');
+      var total = subtotal + activeShipping;
+      orderTotal.innerHTML = '<span>Total</span>&euro;' + total;
+      var canCheckout = activeRegion !== '';
+      if (canCheckout) {
+        checkoutBtn.classList.remove('disabled');
+        checkoutBtn.setAttribute('aria-disabled', 'false');
+      } else {
+        checkoutBtn.classList.add('disabled');
+        checkoutBtn.setAttribute('aria-disabled', 'true');
+      }
+    }
+  }
+
+  shippingBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      shippingBtns.forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-checked', 'false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-checked', 'true');
+      activeShipping = parseInt(btn.dataset.shipping, 10);
+      activeRegion   = btn.dataset.region;
+      updateOrderSummary();
+    });
+  });
+
+  orderSteps.forEach(function (step) {
+    function toggleStep() {
+      var isSelected = step.classList.toggle('selected');
+      step.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+      var num = step.querySelector('.step-num');
+      num.textContent = isSelected ? '\u2713' : step.dataset.num;
+      updateOrderSummary();
+    }
+    // store original number
+    step.dataset.num = step.querySelector('.step-num').textContent;
+    step.addEventListener('click', toggleStep);
+    step.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleStep(); }
+    });
+  });
 
   /* ── Sisterhood "Share Yours" scrolls to contact ── */
   var sistAdd = document.querySelector('.sist-add');
