@@ -700,6 +700,24 @@ section { padding-block: var(--section-py); }
 @media (max-width: 580px) { .sisterhood-grid { grid-template-columns: repeat(2,1fr); } }
 
 /* ═══════════════════════════════
+   IDEAS
+═══════════════════════════════ */
+.ideas {
+  background: var(--charcoal);
+  text-align: center;
+}
+.ideas-content {
+  max-width: 580px; margin: 0 auto;
+}
+.ideas-content .sec-title { color: var(--white); }
+.ideas-content p {
+  color: rgba(255,255,255,0.5); font-weight: 300;
+  margin-bottom: 2.5rem; line-height: 1.85;
+}
+.ideas .eyebrow { color: var(--silver-mid); }
+.ideas .divider { background: linear-gradient(90deg,transparent,#666,transparent); }
+
+/* ═══════════════════════════════
    CONTACT
 ═══════════════════════════════ */
 .contact { background: var(--white); }
@@ -876,6 +894,7 @@ section { padding-block: var(--section-py); }
   <a href="#order">Order</a>
   <a href="#gallery">Gallery</a>
   <a href="#sisterhood">Sisterhood</a>
+  <a href="#ideas">Ideas</a>
   <a href="#contact">Contact</a>
 </div>
 
@@ -1014,7 +1033,7 @@ section { padding-block: var(--section-py); }
           <div class="team-photo-placeholder"><span>TD</span></div>
         </div>
         <div class="team-name">Tara Doherty-Eagles</div>
-        <div class="team-role">International Sales &amp; Marketing</div>
+        <div class="team-role">International Strategy</div>
         <div class="team-location">New York</div>
       </div>
 
@@ -1041,25 +1060,25 @@ section { padding-block: var(--section-py); }
     <p class="order-intro reveal">Select the products you&rsquo;d like &mdash; then proceed to checkout. It&rsquo;s that simple.</p>
 
     <div class="steps reveal">
-      <div class="step" data-price="50" data-name="Hair Serum" role="checkbox" aria-checked="false" tabindex="0">
+      <div class="step" data-price="20" data-name="Hair Serum" role="checkbox" aria-checked="false" tabindex="0">
         <span class="step-hint">click to select</span>
-        <div class="step-num">01</div>
+        <div class="step-num">S</div>
         <h3>Hair Serum</h3>
-        <span class="step-price">&euro;50</span>
+        <span class="step-price">&euro;20</span>
         <p>Eliminates yellow &amp; brassy tones for pure, luminous silver.</p>
       </div>
       <div class="step" data-price="20" data-name="Hair Oil" role="checkbox" aria-checked="false" tabindex="0">
         <span class="step-hint">click to select</span>
-        <div class="step-num">02</div>
+        <div class="step-num">H</div>
         <h3>Hair Oil</h3>
         <span class="step-price">&euro;20</span>
         <p>Radiant finishing gloss essential for white &amp; silver hair.</p>
       </div>
-      <div class="step" data-price="30" data-name="Eyebrow Dye" role="checkbox" aria-checked="false" tabindex="0">
+      <div class="step" data-price="10" data-name="Eyebrow Dye" role="checkbox" aria-checked="false" tabindex="0">
         <span class="step-hint">click to select</span>
-        <div class="step-num">03</div>
+        <div class="step-num">E</div>
         <h3>Eyebrow Dye</h3>
-        <span class="step-price">&euro;30</span>
+        <span class="step-price">&euro;10</span>
         <p>Bold, striking brows to complement your fabulous silver.</p>
       </div>
     </div>
@@ -1165,6 +1184,19 @@ section { padding-block: var(--section-py); }
   </div>
 </section>
 
+<!-- ═══ IDEAS ═══ -->
+<section id="ideas" class="ideas">
+  <div class="container">
+    <div class="ideas-content reveal">
+      <span class="eyebrow">Shape Our Range</span>
+      <h2 class="sec-title"><em>Ideas</em></h2>
+      <div class="divider divider-center"></div>
+      <p>If you have any ideas you want us to develop and add to our range, please share them with us. We&rsquo;re in this together.</p>
+      <a href="#contact" class="btn btn-light">Share Your Idea</a>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ CONTACT US ═══ -->
 <section id="contact" class="contact">
   <div class="container">
@@ -1256,6 +1288,7 @@ section { padding-block: var(--section-py); }
       <ul class="footer-nav footer-nav-right">
         <li><a href="#gallery">Gallery</a></li>
         <li><a href="#sisterhood">Sisterhood</a></li>
+        <li><a href="#ideas">Ideas</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
@@ -1414,12 +1447,8 @@ section { padding-block: var(--section-py); }
     function toggleStep() {
       var isSelected = step.classList.toggle('selected');
       step.setAttribute('aria-checked', isSelected ? 'true' : 'false');
-      var num = step.querySelector('.step-num');
-      num.textContent = isSelected ? '\u2713' : step.dataset.num;
       updateOrderSummary();
     }
-    // store original number
-    step.dataset.num = step.querySelector('.step-num').textContent;
     step.addEventListener('click', toggleStep);
     step.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleStep(); }
