@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sophizo — The Colour of Wisdom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ── Reset ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Custom Properties ── */
+:root {
+  --white:         #FFFFFF;
+  --pearl:         #FAFAFA;
+  --silver-pale:   #F5F5F5;
+  --silver-light:  #EBEBEB;
+  --silver:        #C0C0C0;
+  --silver-mid:    #AAAAAA;
+  --grey:          #888888;
+  --grey-dark:     #555555;
+  --charcoal:      #2A2A2A;
+  --black:         #111111;
+
+  --silver-grad: linear-gradient(90deg, transparent, #C0C0C0, transparent);
+
+  --font-head: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Montserrat', sans-serif;
+
+  --fs-display: clamp(3.2rem, 6vw + 1rem, 7.5rem);
+  --fs-h2:      clamp(2rem, 3vw + 0.5rem, 3.75rem);
+  --fs-h3:      clamp(1.2rem, 1.2vw + 0.4rem, 1.6rem);
+  --fs-body:    clamp(0.85rem, 0.4vw + 0.72rem, 1rem);
+  --fs-sm:      0.8125rem;
+  --fs-xs:      0.75rem;
+
+  --nav-h:      80px;
+  --container:  min(1200px, 90%);
+  --section-py: clamp(5rem, 9vw, 10rem);
+  --ease:       0.3s ease;
+}
+
+/* ── Base ── */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+  color: var(--charcoal);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--silver); color: var(--white); }
+:focus-visible { outline: 1px solid var(--silver); outline-offset: 3px; }
+img { display: block; max-width: 100%; }
+a { text-decoration: none; color: inherit; }
+
+/* ── Skip Link ── */
+.skip-link {
+  position: absolute; top: -100%; left: 1rem;
+  background: var(--charcoal); color: var(--white);
+  padding: 0.5rem 1rem; z-index: 10000;
+  font-size: var(--fs-sm);
+}
+.skip-link:focus { top: 1rem; }
+
+/* ── Container ── */
+.container { width: var(--container); margin: 0 auto; }
+
+/* ── Section padding ── */
+section { padding-block: var(--section-py); }
+
+/* ── Shared Section Header ── */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--silver-mid);
+  display: block;
+  margin-bottom: 0.9rem;
+}
+
+.sec-title {
+  font-family: var(--font-head);
+  font-size: var(--fs-h2);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--charcoal);
+  margin-bottom: 1.25rem;
+}
+.sec-title em { font-style: italic; color: var(--grey-dark); }
+
+.divider {
+  width: 56px; height: 1px;
+  background: var(--silver-grad);
+  margin-bottom: 2rem;
+}
+.divider-center { margin-left: auto; margin-right: auto; }
+
+/* ── Reveal on Scroll ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: 0.1s; }
+.reveal.d2 { transition-delay: 0.2s; }
+.reveal.d3 { transition-delay: 0.3s; }
+.reveal.d4 { transition-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* ═══════════════════════════════
+   NAVIGATION
+═══════════════════════════════ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000; height: var(--nav-h);
+  transition: background var(--ease), box-shadow var(--ease);
+}
+.nav.scrolled {
+  background: rgba(255,255,255,0.97);
+  box-shadow: 0 1px 24px rgba(0,0,0,0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav-inner {
+  width: var(--container); margin: 0 auto;
+  height: 100%;
+  display: flex; align-items: center;
+  position: relative;
+}
+
+/* Split nav: links on both sides, logo absolutely centered */
+.nav-left, .nav-right {
+  display: flex; gap: 2.25rem;
+  list-style: none; flex: 1;
+}
+.nav-right { justify-content: flex-end; }
+
+.nav-left a, .nav-right a {
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.88);
+  transition: color var(--ease);
+  position: relative;
+}
+.nav.scrolled .nav-left a,
+.nav.scrolled .nav-right a { color: var(--grey-dark); }
+
+.nav-left a::after, .nav-right a::after {
+  content: ''; position: absolute; bottom: -2px; left: 0;
+  width: 0; height: 1px; background: currentColor;
+  transition: width var(--ease);
+}
+.nav-left a:hover::after, .nav-right a:hover::after { width: 100%; }
+.nav-left a:hover, .nav-right a:hover { color: rgba(255,255,255,0.6); }
+.nav.scrolled .nav-left a:hover,
+.nav.scrolled .nav-right a:hover { color: var(--charcoal); }
+
+/* Centered logo */
+.nav-logo-wrap {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+}
+.nav-brand-text {
+  font-family: var(--font-head);
+  font-size: 1.5rem; font-weight: 300;
+  letter-spacing: 0.14em;
+  color: var(--white);
+  transition: color var(--ease);
+}
+.nav.scrolled .nav-brand-text { color: var(--charcoal); }
+
+/* Hamburger (mobile) */
+.nav-toggle {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 0.4rem;
+  z-index: 1001;
+}
+.nav-toggle span {
+  display: block; width: 22px; height: 1.5px;
+  background: var(--white); transition: transform var(--ease), opacity var(--ease), background var(--ease);
+}
+.nav.scrolled .nav-toggle span { background: var(--charcoal); }
+.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile full-screen overlay */
+.mobile-menu {
+  display: none; position: fixed; inset: 0; z-index: 999;
+  background: var(--white);
+  flex-direction: column; align-items: center; justify-content: center; gap: 2.25rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: var(--font-head); font-size: 2rem; color: var(--charcoal);
+  letter-spacing: 0.04em; transition: color var(--ease);
+}
+.mobile-menu a:hover { color: var(--silver-mid); }
+
+@media (max-width: 900px) {
+  .nav-left, .nav-right { display: none; }
+  .nav-toggle { display: flex; }
+  .nav-inner { justify-content: space-between; }
+  .nav-logo-wrap { position: static; transform: none; }
+}
+
+/* ═══════════════════════════════
+   BUTTONS
+═══════════════════════════════ */
+.btn {
+  display: inline-block;
+  padding: 0.875rem 2.5rem;
+  font-family: var(--font-body); font-size: var(--fs-xs);
+  font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+  cursor: pointer; border: none;
+  transition: background var(--ease), color var(--ease), box-shadow var(--ease), transform var(--ease);
+}
+.btn:hover { transform: translateY(-1px); }
+
+.btn-light {
+  background: var(--white); color: var(--charcoal);
+}
+.btn-light:hover { background: var(--silver-light); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+
+.btn-outline-light {
+  background: transparent; border: 1px solid rgba(255,255,255,0.55); color: var(--white);
+}
+.btn-outline-light:hover { background: rgba(255,255,255,0.1); border-color: var(--white); }
+
+.btn-dark {
+  background: var(--charcoal); color: var(--white);
+}
+.btn-dark:hover { background: var(--black); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+.btn-outline-dark {
+  background: transparent; border: 1px solid var(--charcoal); color: var(--charcoal);
+}
+.btn-outline-dark:hover { background: var(--charcoal); color: var(--white); }
+
+/* ═══════════════════════════════
+   HERO
+═══════════════════════════════ */
+.hero {
+  min-height: 100vh; position: relative;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background: url('unnamed.jpg') center/cover no-repeat;
+  transform: scale(1.06);
+  transition: transform 9s ease;
+  will-change: transform;
+}
+.hero-bg.loaded { transform: scale(1); }
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg,
+    rgba(15,15,15,0.52) 0%,
+    rgba(15,15,15,0.32) 50%,
+    rgba(15,15,15,0.62) 100%);
+}
+
+.hero-content {
+  position: relative; z-index: 1;
+  max-width: 680px; padding: 0 1.5rem;
+}
+
+.hero-eyebrow {
+  display: block;
+  font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: 0.32em; text-transform: uppercase;
+  color: rgba(255,255,255,0.88); margin-bottom: 1.25rem;
+  animation: fadeUp 1s ease both;
+}
+
+.hero-brand {
+  font-family: var(--font-head);
+  font-size: clamp(3.5rem, 8vw, 9rem);
+  font-weight: 300; line-height: 0.95;
+  color: var(--white); letter-spacing: 0.08em;
+  animation: fadeUp 1s 0.15s ease both;
+}
+
+.hero-tagline {
+  font-family: var(--font-head);
+  font-size: clamp(1rem, 1.5vw + 0.4rem, 1.5rem);
+  font-weight: 300; font-style: italic;
+  color: rgba(255,255,255,0.82); letter-spacing: 0.1em;
+  margin-top: 0.5rem; margin-bottom: 1.75rem;
+  animation: fadeUp 1s 0.3s ease both;
+}
+
+.hero-sub {
+  font-size: var(--fs-sm); font-weight: 300;
+  color: rgba(255,255,255,0.72); letter-spacing: 0.04em;
+  margin-bottom: 2.5rem; line-height: 1.85;
+  animation: fadeUp 1s 0.45s ease both;
+}
+
+.hero-ctas {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  animation: fadeUp 1s 0.6s ease both;
+}
+
+.hero-scroll {
+  position: absolute; bottom: 2.25rem; left: 50%; transform: translateX(-50%);
+  z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  animation: fadeUp 1s 0.75s ease both;
+}
+.hero-scroll span {
+  font-size: var(--fs-xs); letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+.scroll-bar {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.45), transparent);
+  animation: scrollDrop 2.2s ease infinite;
+}
+@keyframes scrollDrop {
+  0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+  50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ═══════════════════════════════
+   PRODUCTS / RANGE
+═══════════════════════════════ */
+.products { background: var(--white); }
+
+.products-header { text-align: center; margin-bottom: 4rem; }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+}
+
+.product-card { cursor: pointer; }
+
+.product-img {
+  aspect-ratio: 3/4; overflow: hidden;
+  background: var(--silver-pale); position: relative;
+}
+.product-img img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center top;
+  transition: transform 0.7s ease;
+}
+.product-card:hover .product-img img { transform: scale(1.05); }
+
+.product-info { padding: 1.1rem 0; }
+.product-info h3 {
+  font-family: var(--font-head); font-size: 1.35rem; font-weight: 400;
+  margin-bottom: 0.25rem; color: var(--charcoal);
+}
+.product-info p { font-size: var(--fs-sm); color: var(--grey); font-weight: 300; }
+.product-price {
+  display: block; margin-top: 0.5rem;
+  font-size: var(--fs-sm); font-weight: 500; color: var(--grey-dark);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 900px)  { .products-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .products-grid { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════
+   ABOUT US
+═══════════════════════════════ */
+.about { background: var(--silver-pale); }
+
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: center;
+}
+
+.about-imgs { position: relative; }
+.about-main {
+  width: 100%; aspect-ratio: 3/4;
+  object-fit: cover; object-position: center top;
+}
+.about-accent {
+  position: absolute; bottom: -2rem; right: -2rem;
+  width: 44%; aspect-ratio: 1;
+  object-fit: cover; object-position: center top;
+  border: 6px solid var(--white);
+}
+
+.about-text p {
+  color: var(--grey-dark); font-weight: 300;
+  margin-bottom: 1.25rem; line-height: 1.85;
+}
+
+.values {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.5rem; margin-top: 2.5rem;
+}
+.value { border-top: 1px solid var(--silver-light); padding-top: 1rem; }
+.value h4 {
+  font-family: var(--font-head); font-size: 1.1rem; font-weight: 400;
+  margin-bottom: 0.35rem; color: var(--charcoal);
+}
+.value p { font-size: var(--fs-sm); color: var(--grey); margin: 0; line-height: 1.6; }
+
+@media (max-width: 820px) {
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .about-accent { display: none; }
+}
+
+/* ═══════════════════════════════
+   ORDER
+═══════════════════════════════ */
+.order { background: var(--charcoal); }
+.order .eyebrow { color: var(--silver-mid); }
+.order .sec-title { color: var(--white); }
+
+.order-intro {
+  max-width: 520px; margin: 0 auto 4.5rem;
+  text-align: center; color: rgba(255,255,255,0.55); font-weight: 300;
+}
+
+.steps {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 2.5rem; position: relative; margin-bottom: 4rem;
+}
+.steps::before {
+  content: ''; position: absolute; top: 2rem; left: 12.5%; width: 75%;
+  height: 1px; background: rgba(255,255,255,0.09);
+}
+
+.step { text-align: center; position: relative; }
+.step-num {
+  width: 4rem; height: 4rem; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-family: var(--font-head); font-size: 1.45rem; color: var(--silver-mid);
+  background: var(--charcoal); position: relative; z-index: 1;
+}
+.step h3 {
+  font-family: var(--font-head); font-size: 1.2rem; font-weight: 400;
+  color: var(--white); margin-bottom: 0.5rem;
+}
+.step p { font-size: var(--fs-sm); color: rgba(255,255,255,0.45); font-weight: 300; line-height: 1.7; }
+
+@media (max-width: 760px) { .steps { grid-template-columns: 1fr 1fr; } .steps::before { display: none; } }
+@media (max-width: 460px) { .steps { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════
+   GALLERY
+═══════════════════════════════ */
+.gallery { background: var(--white); padding-bottom: 0; }
+.gallery-header { text-align: center; margin-bottom: 3.5rem; }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+.gallery-item { overflow: hidden; position: relative; cursor: pointer; }
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center top;
+  display: block; transition: transform 0.65s ease;
+}
+.gallery-item:hover img { transform: scale(1.06); }
+
+/* First item: big feature */
+.gallery-item:first-child {
+  grid-column: span 2; grid-row: span 2;
+  aspect-ratio: 1;
+}
+.gallery-item:not(:first-child) { aspect-ratio: 1; }
+
+.gallery-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.32);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity var(--ease);
+}
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-overlay span {
+  color: var(--white); font-size: var(--fs-xs);
+  font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-item:first-child { grid-column: span 1; grid-row: span 1; }
+}
+
+/* ═══════════════════════════════
+   JOIN THE SISTERHOOD
+═══════════════════════════════ */
+.sisterhood { background: var(--silver-pale); text-align: center; }
+
+.sisterhood-content {
+  max-width: 660px; margin: 0 auto 3.5rem;
+}
+.sisterhood-content .sec-title { font-style: italic; }
+.sisterhood-content p {
+  color: var(--grey); font-weight: 300;
+  margin-bottom: 2rem; line-height: 1.85;
+}
+
+.sisterhood-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 4px; max-width: 900px; margin: 0 auto;
+}
+.sist-item { aspect-ratio: 1; overflow: hidden; position: relative; cursor: pointer; }
+.sist-item img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center top;
+  transition: transform 0.65s ease;
+}
+.sist-item:hover img { transform: scale(1.06); }
+
+.sist-add {
+  background: var(--charcoal);
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+  gap: 0.5rem; cursor: pointer; transition: background var(--ease);
+}
+.sist-add:hover { background: var(--black); }
+.sist-add-icon { font-size: 2rem; color: var(--silver-mid); line-height: 1; }
+.sist-add p { font-size: var(--fs-xs); letter-spacing: 0.14em; text-transform: uppercase; color: var(--silver-mid); font-weight: 500; margin: 0; }
+
+@media (max-width: 580px) { .sisterhood-grid { grid-template-columns: repeat(2,1fr); } }
+
+/* ═══════════════════════════════
+   CONTACT
+═══════════════════════════════ */
+.contact { background: var(--white); }
+.contact-header { text-align: center; margin-bottom: 4rem; }
+
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: start;
+}
+
+.contact-info p {
+  color: var(--grey); font-weight: 300;
+  margin-bottom: 1.25rem; line-height: 1.85;
+}
+
+.contact-details { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+.contact-row { display: flex; gap: 1rem; align-items: flex-start; }
+.c-label {
+  font-size: var(--fs-xs); font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--silver-mid); min-width: 76px; padding-top: 0.1rem;
+}
+.c-val { font-size: var(--fs-sm); color: var(--grey-dark); font-weight: 300; }
+
+/* Floating-label form */
+.form-field { position: relative; margin-bottom: 1.75rem; }
+
+.form-field input,
+.form-field textarea {
+  width: 100%; padding: 1rem 0;
+  background: transparent; border: none;
+  border-bottom: 1px solid var(--silver-light);
+  color: var(--charcoal); font-family: var(--font-body);
+  font-size: var(--fs-body); font-weight: 300;
+  border-radius: 0; -webkit-appearance: none; appearance: none;
+  transition: border-color var(--ease);
+}
+.form-field textarea { min-height: 120px; resize: none; }
+.form-field input:focus,
+.form-field textarea:focus { outline: none; border-bottom-color: var(--charcoal); }
+
+.form-field label {
+  position: absolute; left: 0; top: 1rem;
+  font-size: var(--fs-sm); color: var(--grey);
+  pointer-events: none; transition: all 0.2s ease;
+  letter-spacing: 0.04em;
+}
+.form-field input:focus ~ label,
+.form-field input:not(:placeholder-shown) ~ label,
+.form-field textarea:focus ~ label,
+.form-field textarea:not(:placeholder-shown) ~ label {
+  top: -0.7rem; font-size: var(--fs-xs);
+  color: var(--silver-mid); letter-spacing: 0.12em;
+}
+
+.form-line {
+  position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1px; background: var(--charcoal);
+  transition: width var(--ease);
+}
+.form-field input:focus ~ .form-line,
+.form-field textarea:focus ~ .form-line { width: 100%; }
+
+.form-success-msg {
+  display: none; text-align: center; padding: 3rem 1rem;
+}
+.form-success-msg.show { display: block; }
+.form-success-msg h3 {
+  font-family: var(--font-head); font-size: 1.75rem; font-weight: 400;
+  margin-bottom: 0.5rem; color: var(--charcoal);
+}
+.form-success-msg p { color: var(--grey); font-weight: 300; }
+.success-icon {
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 1px solid var(--silver-light);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.25rem; font-size: 1.25rem; color: var(--grey-dark);
+}
+
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+}
+
+/* ═══════════════════════════════
+   FOOTER
+═══════════════════════════════ */
+.footer {
+  background: var(--charcoal);
+  padding: 4rem 0 2rem;
+}
+
+.footer-inner {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 2.5rem; align-items: start;
+  margin-bottom: 3rem;
+}
+
+.footer-nav { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+.footer-nav-right { align-items: flex-end; }
+.footer-nav a {
+  font-size: var(--fs-xs); letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.38); transition: color var(--ease);
+}
+.footer-nav a:hover { color: var(--white); }
+
+.footer-brand { text-align: center; }
+.footer-logo {
+  width: 56px; height: 56px; border-radius: 50%; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  margin: 0 auto 0.9rem;
+}
+.footer-logo img { width: 130%; height: 130%; margin: -15%; object-fit: cover; object-position: center center; }
+.footer-name {
+  font-family: var(--font-head); font-size: 1.75rem;
+  font-weight: 300; letter-spacing: 0.14em;
+  color: var(--white);
+}
+.footer-tagline-text {
+  font-family: var(--font-head); font-style: italic;
+  font-size: 0.95rem; color: var(--silver-mid);
+  letter-spacing: 0.06em; margin-top: 0.2rem;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 1.5rem; text-align: center;
+  font-size: var(--fs-xs); letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.28);
+}
+
+@media (max-width: 768px) {
+  .footer-inner { grid-template-columns: 1fr; text-align: center; }
+  .footer-nav { align-items: center; }
+  .footer-nav-right { align-items: center; }
+}
+
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <ul class="nav-left">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#about">About Us</a></li>
+    </ul>
+
+    <a href="#home" class="nav-logo-wrap" aria-label="Sophizo — home">
+      <span class="nav-brand-text">Sophizo</span>
+    </a>
+
+    <ul class="nav-right">
+      <li><a href="#order">Order</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile overlay menu -->
+<div class="mobile-menu" aria-hidden="true" role="dialog" aria-label="Navigation menu">
+  <a href="#home">Home</a>
+  <a href="#products">Products</a>
+  <a href="#about">About Us</a>
+  <a href="#order">Order</a>
+  <a href="#gallery">Gallery</a>
+  <a href="#sisterhood">Sisterhood</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<main id="main">
+
+<!-- ═══ HOME / HERO ═══ -->
+<section id="home" class="hero" aria-label="Home">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Premium Hair Serum</span>
+    <h1 class="hero-brand">Sophizo</h1>
+    <p class="hero-tagline">the colour of wisdom</p>
+    <p class="hero-sub">Releasing your authentic self.<br>Because every woman deserves to feel extraordinary.</p>
+    <div class="hero-ctas">
+      <a href="#products" class="btn btn-light">Shop the Range</a>
+      <a href="#about" class="btn btn-outline-light">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- ═══ PRODUCTS / RANGE ═══ -->
+<section id="products" class="products">
+  <div class="container">
+    <div class="products-header reveal">
+      <span class="eyebrow">The Collection</span>
+      <h2 class="sec-title">Our <em>Range</em></h2>
+      <div class="divider divider-center"></div>
+      <p style="max-width:520px;margin:0 auto;color:var(--grey);font-weight:300;">
+        Premium extensions in every method, shade, and length &mdash; crafted for women who refuse to compromise.
+      </p>
+    </div>
+
+    <div class="products-grid">
+      <div class="product-card reveal d1">
+        <div class="product-img">
+          <img src="unnamed.jpg" alt="Clip-In Extensions" loading="lazy">
+        </div>
+        <div class="product-info">
+          <h3>Clip-In Extensions</h3>
+          <p>Instant length &amp; volume. Apply in minutes, remove effortlessly.</p>
+          <span class="product-price">From $180</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal d2">
+        <div class="product-img">
+          <img src="unnamed.jpg" alt="Tape-In Extensions" loading="lazy">
+        </div>
+        <div class="product-info">
+          <h3>Tape-In Extensions</h3>
+          <p>Seamlessly blended, long-lasting. The salon favourite.</p>
+          <span class="product-price">From $280</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal d3">
+        <div class="product-img">
+          <img src="unnamed.jpg" alt="Halo Extensions" loading="lazy">
+        </div>
+        <div class="product-info">
+          <h3>Halo Extensions</h3>
+          <p>No clips, no tape, no damage. Pure, ethereal volume.</p>
+          <span class="product-price">From $220</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal d4">
+        <div class="product-img">
+          <img src="unnamed.jpg" alt="Weft Extensions" loading="lazy">
+        </div>
+        <div class="product-info">
+          <h3>Weft Extensions</h3>
+          <p>Maximum volume for the most dramatic transformation.</p>
+          <span class="product-price">From $320</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT US ═══ -->
+<section id="about" class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-imgs reveal">
+        <img class="about-main" src="unnamed.jpg" alt="The Sophizo story" loading="lazy">
+        <img class="about-accent" src="unnamed.jpg" alt="" loading="lazy" aria-hidden="true">
+      </div>
+
+      <div class="about-text reveal d2">
+        <span class="eyebrow">Our Story</span>
+        <h2 class="sec-title">Where <em>Passion</em> Meets Craft</h2>
+        <div class="divider"></div>
+        <p>We believe beautiful hair is more than an accessory &mdash; it is an expression of who you are. Founded by women, for women, our mission has always been to provide the highest quality hair extensions with complete transparency about sourcing and craft.</p>
+        <p>Every strand is ethically sourced, hand-selected, and crafted with care. We work closely with our suppliers to ensure fair practices at every step of the journey &mdash; from source to your door.</p>
+        <p>Our team of hair specialists is here to guide you to your perfect match, ensuring you leave every interaction feeling confident and radiant.</p>
+
+        <div class="values">
+          <div class="value">
+            <h4>Ethically Sourced</h4>
+            <p>100% human hair, responsibly and transparently sourced.</p>
+          </div>
+          <div class="value">
+            <h4>Premium Quality</h4>
+            <p>Remy hair only &mdash; the gold standard in extensions.</p>
+          </div>
+          <div class="value">
+            <h4>Expert Guidance</h4>
+            <p>Personalised consultations for your perfect shade &amp; length.</p>
+          </div>
+          <div class="value">
+            <h4>Sisterhood</h4>
+            <p>A community celebrating every woman&rsquo;s unique beauty.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ORDER ═══ -->
+<section id="order" class="order">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <span class="eyebrow">Get Started</span>
+      <h2 class="sec-title">How to <em>Order</em></h2>
+      <div class="divider divider-center" style="background:linear-gradient(90deg,transparent,#666,transparent);"></div>
+    </div>
+    <p class="order-intro reveal">Your transformation is just four steps away. Our team is with you every step of the journey.</p>
+
+    <div class="steps">
+      <div class="step reveal d1">
+        <div class="step-num">01</div>
+        <h3>Choose Your Shade</h3>
+        <p>Browse our full shade range or request a free colour-match consultation with our specialists.</p>
+      </div>
+      <div class="step reveal d2">
+        <div class="step-num">02</div>
+        <h3>Select Your Length</h3>
+        <p>From subtle 14&rdquo; to luxurious 24&rdquo; &mdash; choose the length that matches your vision.</p>
+      </div>
+      <div class="step reveal d3">
+        <div class="step-num">03</div>
+        <h3>Pick Your Method</h3>
+        <p>Clip-in, tape-in, halo, or weft. Our specialists will help you find your perfect fit.</p>
+      </div>
+      <div class="step reveal d4">
+        <div class="step-num">04</div>
+        <h3>Delivered to Your Door</h3>
+        <p>Express shipping worldwide, beautifully packaged and ready for your transformation.</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;" class="reveal">
+      <a href="#contact" class="btn btn-light">Start Your Order</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GALLERY ═══ -->
+<section id="gallery" class="gallery">
+  <div class="container">
+    <div class="gallery-header reveal">
+      <span class="eyebrow">Inspiration</span>
+      <h2 class="sec-title">The <em>Gallery</em></h2>
+      <div class="divider divider-center"></div>
+    </div>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <img src="unnamed.jpg" alt="Gallery &mdash; hair transformation" loading="lazy">
+      <div class="gallery-overlay"><span>View</span></div>
+    </div>
+    <div class="gallery-item reveal d1">
+      <img src="unnamed.jpg" alt="Gallery &mdash; hair styling" loading="lazy">
+      <div class="gallery-overlay"><span>View</span></div>
+    </div>
+    <div class="gallery-item reveal d1">
+      <img src="unnamed.jpg" alt="Gallery &mdash; extensions look" loading="lazy">
+      <div class="gallery-overlay"><span>View</span></div>
+    </div>
+    <div class="gallery-item reveal d2">
+      <img src="unnamed.jpg" alt="Gallery &mdash; elegant hair" loading="lazy">
+      <div class="gallery-overlay"><span>View</span></div>
+    </div>
+    <div class="gallery-item reveal d2">
+      <img src="unnamed.jpg" alt="Gallery &mdash; voluminous hair" loading="lazy">
+      <div class="gallery-overlay"><span>View</span></div>
+    </div>
+    <div class="gallery-item reveal d3">
+      <img src="unnamed.jpg" alt="Gallery &mdash; luxurious extensions" loading="lazy">
+      <div class="gallery-overlay"><span>View</span></div>
+    </div>
+    <div class="gallery-item reveal d3">
+      <img src="unnamed.jpg" alt="Gallery &mdash; stunning transformation" loading="lazy">
+      <div class="gallery-overlay"><span>View</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ JOIN THE SISTERHOOD ═══ -->
+<section id="sisterhood" class="sisterhood">
+  <div class="container">
+    <div class="sisterhood-content reveal">
+      <span class="eyebrow">Community</span>
+      <h2 class="sec-title"><em>Join the Sisterhood</em></h2>
+      <div class="divider divider-center"></div>
+      <p>Share your transformation with our community of women who celebrate beauty in all its forms. Tag us or submit your photo below &mdash; you might just inspire someone else&rsquo;s next look.</p>
+      <a href="#contact" class="btn btn-dark">Share Your Look</a>
+    </div>
+
+    <div class="sisterhood-grid reveal">
+      <div class="sist-item">
+        <img src="unnamed.jpg" alt="Community transformation" loading="lazy">
+      </div>
+      <div class="sist-item">
+        <img src="unnamed.jpg" alt="Community transformation" loading="lazy">
+      </div>
+      <div class="sist-item">
+        <img src="unnamed.jpg" alt="Community transformation" loading="lazy">
+      </div>
+      <div class="sist-item">
+        <img src="unnamed.jpg" alt="Community transformation" loading="lazy">
+      </div>
+      <div class="sist-item">
+        <img src="unnamed.jpg" alt="Community transformation" loading="lazy">
+      </div>
+      <div class="sist-item sist-add" role="button" tabindex="0" aria-label="Share your photo">
+        <div class="sist-add-icon">+</div>
+        <p>Share Yours</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT US ═══ -->
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="contact-header reveal">
+      <span class="eyebrow">Get in Touch</span>
+      <h2 class="sec-title">Contact <em>Us</em></h2>
+      <div class="divider divider-center"></div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <p>Whether you have a question about our range, want to book a consultation, or simply want to say hello &mdash; we would love to hear from you. Our team responds within 24 hours.</p>
+        <div class="contact-details">
+          <div class="contact-row">
+            <span class="c-label">Email</span>
+            <span class="c-val">hello@sophizo.com</span>
+          </div>
+          <div class="contact-row">
+            <span class="c-label">Phone</span>
+            <span class="c-val">[Your phone number]</span>
+          </div>
+          <div class="contact-row">
+            <span class="c-label">Location</span>
+            <span class="c-val">[Your location]</span>
+          </div>
+          <div class="contact-row">
+            <span class="c-label">Hours</span>
+            <span class="c-val">Mon &ndash; Fri, 9am &ndash; 5pm</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal d2">
+        <form id="contact-form" novalidate>
+          <div class="form-field">
+            <input type="text" id="f-name" name="name" placeholder=" " required autocomplete="name">
+            <label for="f-name">Your Name</label>
+            <div class="form-line"></div>
+          </div>
+          <div class="form-field">
+            <input type="email" id="f-email" name="email" placeholder=" " required autocomplete="email">
+            <label for="f-email">Email Address</label>
+            <div class="form-line"></div>
+          </div>
+          <div class="form-field">
+            <input type="text" id="f-subject" name="subject" placeholder=" ">
+            <label for="f-subject">Subject</label>
+            <div class="form-line"></div>
+          </div>
+          <div class="form-field">
+            <textarea id="f-message" name="message" placeholder=" " required></textarea>
+            <label for="f-message">Your Message</label>
+            <div class="form-line"></div>
+          </div>
+          <button type="submit" class="btn btn-dark" style="width:100%;">Send Message</button>
+        </form>
+        <div class="form-success-msg" id="form-success">
+          <div class="success-icon">&#10003;</div>
+          <h3>Message Sent</h3>
+          <p>Thank you for reaching out. We will be in touch within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <ul class="footer-nav">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#order">Order</a></li>
+      </ul>
+
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="logo.png" alt="Sophizo logo">
+        </div>
+        <div class="footer-name">Sophizo</div>
+        <div class="footer-tagline-text">the colour of wisdom</div>
+      </div>
+
+      <ul class="footer-nav footer-nav-right">
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#sisterhood">Sisterhood</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Sophizo. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Nav scroll state ── */
+  var nav = document.querySelector('.nav');
+  function syncNav() {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  }
+  window.addEventListener('scroll', syncNav, { passive: true });
+  syncNav();
+
+  /* ── Mobile nav ── */
+  var toggle     = document.querySelector('.nav-toggle');
+  var mobileMenu = document.querySelector('.mobile-menu');
+  var mobileLinks = mobileMenu.querySelectorAll('a');
+
+  function closeMobile() {
+    toggle.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+    mobileMenu.classList.remove('open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  toggle.addEventListener('click', function () {
+    var isOpen = toggle.classList.contains('open');
+    if (isOpen) {
+      closeMobile();
+    } else {
+      toggle.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+      mobileMenu.classList.add('open');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+  });
+  mobileLinks.forEach(function (link) { link.addEventListener('click', closeMobile); });
+
+  /* ── Reveal on scroll ── */
+  var reveals = document.querySelectorAll('.reveal');
+  var revealObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(function (el) { revealObs.observe(el); });
+
+  /* ── Hero Ken Burns + parallax ── */
+  var heroBg = document.getElementById('hero-bg');
+  if (heroBg) {
+    setTimeout(function () { heroBg.classList.add('loaded'); }, 80);
+    window.addEventListener('scroll', function () {
+      if (window.scrollY < window.innerHeight) {
+        heroBg.style.transform = 'scale(1) translateY(' + (window.scrollY * 0.35) + 'px)';
+      }
+    }, { passive: true });
+  }
+
+  /* ── Contact form ── */
+  var form    = document.getElementById('contact-form');
+  var success = document.getElementById('form-success');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nameEl  = form.querySelector('#f-name');
+      var emailEl = form.querySelector('#f-email');
+      var msgEl   = form.querySelector('#f-message');
+      var valid   = true;
+
+      [nameEl, emailEl, msgEl].forEach(function (el) { el.style.borderBottomColor = ''; });
+
+      if (!nameEl.value.trim())  { nameEl.style.borderBottomColor  = 'var(--grey)'; valid = false; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value.trim())) { emailEl.style.borderBottomColor = 'var(--grey)'; valid = false; }
+      if (!msgEl.value.trim())   { msgEl.style.borderBottomColor   = 'var(--grey)'; valid = false; }
+
+      if (valid) {
+        form.style.display = 'none';
+        success.classList.add('show');
+      }
+    });
+  }
+
+  /* ── Sisterhood "Share Yours" scrolls to contact ── */
+  var sistAdd = document.querySelector('.sist-add');
+  if (sistAdd) {
+    function goToContact() {
+      document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
+    }
+    sistAdd.addEventListener('click', goToContact);
+    sistAdd.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToContact(); }
+    });
+  }
+
+}());
+</script>
+</body>
+</html>
