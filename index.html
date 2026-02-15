@@ -312,9 +312,12 @@ section { padding-block: var(--section-py); }
 }
 
 .hero-sub {
-  font-size: var(--fs-sm); font-weight: 300;
-  color: rgba(255,255,255,0.72); letter-spacing: 0.04em;
-  margin-bottom: 2.5rem; line-height: 1.85;
+  font-family: var(--font-head);
+  font-size: clamp(1.1rem, 1.8vw + 0.4rem, 1.65rem);
+  font-weight: 300; font-style: italic;
+  color: rgba(255,255,255,0.92); letter-spacing: 0.06em;
+  margin-bottom: 2.5rem; line-height: 1.7;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.35);
   animation: fadeUp 1s 0.45s ease both;
 }
 
@@ -876,6 +879,7 @@ section { padding-block: var(--section-py); }
     <ul class="nav-right">
       <li><a href="#team">Team</a></li>
       <li><a href="#order">Order</a></li>
+      <li><a href="#sisterhood">Sisterhood</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
 
@@ -892,7 +896,6 @@ section { padding-block: var(--section-py); }
   <a href="#about">About Us</a>
   <a href="#team">Team</a>
   <a href="#order">Order</a>
-  <a href="#gallery">Gallery</a>
   <a href="#sisterhood">Sisterhood</a>
   <a href="#ideas">Ideas</a>
   <a href="#contact">Contact</a>
@@ -908,7 +911,7 @@ section { padding-block: var(--section-py); }
     <span class="hero-eyebrow">Premium Hair Serum</span>
     <h1 class="hero-brand">Sophizo</h1>
     <p class="hero-tagline">the colour of wisdom</p>
-    <p class="hero-sub">Banish brass. Embrace brilliance.<br>Because silver hair deserves to be extraordinary.</p>
+    <p class="hero-sub">Rinse-in / Rinse-out. Our one drop solution.<br>Natural hair deserves to be extraordinary.</p>
     <div class="hero-ctas">
       <a href="#products" class="btn btn-light">Shop the Range</a>
       <a href="#about" class="btn btn-outline-light">Our Story</a>
@@ -983,8 +986,9 @@ section { padding-block: var(--section-py); }
         <h2 class="sec-title">Where <em>Passion</em> Meets Craft</h2>
         <div class="divider"></div>
         <p>We believe silver hair is not something to hide &mdash; it is something to celebrate. Sophizo was born from a simple truth: women who embrace their natural colour deserve products that make it extraordinary.</p>
-        <p>Our hair serum is the hero. Formulated to banish yellow and brassy tones, it restores the cool, luminous silver that brassiness robs you of. Paired with our finishing oil &mdash; essential for white and silver hair &mdash; your colour glows with healthy vitality.</p>
-        <p>And because great hair deserves a great frame, our eyebrow dye ensures your brows remain bold, defined, and perfectly complementary to your beautiful silver.</p>
+        <p>Our hair serum is the key, formulated to banish yellow and brassy tones. </p>
+        <p>Our hair oil is the perfect finish&mdash; intended specifically for undyed hair.</p>
+        <p>And because great hair deserves a great frame, we suggest our eyebrow dye (brown not black). This product ensures your brows remain bold and defined but not scary!</p>
 
         <div class="values">
           <div class="value">
@@ -1107,7 +1111,7 @@ section { padding-block: var(--section-py); }
   </div>
 </section>
 
-<!-- ═══ GALLERY ═══ -->
+<!-- ═══ GALLERY (commented out — photos to be added later) ═══
 <section id="gallery" class="gallery">
   <div class="container">
     <div class="gallery-header reveal">
@@ -1148,6 +1152,7 @@ section { padding-block: var(--section-py); }
     </div>
   </div>
 </section>
+═══ END GALLERY ═══ -->
 
 <!-- ═══ JOIN THE SISTERHOOD ═══ -->
 <section id="sisterhood" class="sisterhood">
@@ -1160,6 +1165,7 @@ section { padding-block: var(--section-py); }
       <a href="#contact" class="btn btn-dark">Share Your Look</a>
     </div>
 
+    <!-- sisterhood-grid photos to be added later
     <div class="sisterhood-grid reveal">
       <div class="sist-item">
         <img src="unnamed.jpg" alt="Community transformation" loading="lazy">
@@ -1180,6 +1186,8 @@ section { padding-block: var(--section-py); }
         <div class="sist-add-icon">+</div>
         <p>Share Yours</p>
       </div>
+    </div>
+    -->
     </div>
   </div>
 </section>
@@ -1286,7 +1294,6 @@ section { padding-block: var(--section-py); }
       </div>
 
       <ul class="footer-nav footer-nav-right">
-        <li><a href="#gallery">Gallery</a></li>
         <li><a href="#sisterhood">Sisterhood</a></li>
         <li><a href="#ideas">Ideas</a></li>
         <li><a href="#contact">Contact</a></li>
