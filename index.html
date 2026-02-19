@@ -441,9 +441,9 @@ section { padding-block: var(--section-py); }
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 3rem;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -487,7 +487,10 @@ section { padding-block: var(--section-py); }
   text-transform: uppercase; margin-top: 0.4rem;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 900px) {
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 580px) {
   .team-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .team-photo { width: 150px; height: 150px; }
 }
@@ -826,13 +829,13 @@ section { padding-block: var(--section-py); }
 }
 .footer-nav a:hover { color: var(--white); }
 
-.footer-brand { text-align: center; }
+.footer-brand { text-align: center; justify-self: center; }
 .footer-logo {
   width: 56px; height: 56px; border-radius: 50%; overflow: hidden;
   border: 1px solid rgba(255,255,255,0.1);
   margin: 0 auto 0.9rem;
 }
-.footer-logo img { width: 130%; height: 130%; margin: -15%; object-fit: cover; object-position: center center; }
+.footer-logo img { width: 100%; height: 100%; object-fit: cover; object-position: center center; }
 .footer-name {
   font-family: var(--font-head); font-size: 1.75rem;
   font-weight: 300; letter-spacing: 0.14em;
@@ -1049,6 +1052,15 @@ section { padding-block: var(--section-py); }
         <div class="team-role">Technical Director</div>
         <div class="team-location">London</div>
       </div>
+
+      <div class="team-card reveal d4">
+        <div class="team-photo">
+          <div class="team-photo-placeholder"><span>JD</span></div>
+        </div>
+        <div class="team-name">Jack Doherty-Eagles</div>
+        <div class="team-role">Analytics</div>
+        <div class="team-location">Montreal</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1220,15 +1232,15 @@ section { padding-block: var(--section-py); }
         <div class="contact-details">
           <div class="contact-row">
             <span class="c-label">Email</span>
-            <span class="c-val">hello@sophizo.com</span>
+            <span class="c-val">claredoherty@gmail.com</span>
           </div>
           <div class="contact-row">
             <span class="c-label">Phone</span>
-            <span class="c-val">[Your phone number]</span>
+            <span class="c-val">+353 85 816 8435</span>
           </div>
           <div class="contact-row">
             <span class="c-label">Location</span>
-            <span class="c-val">[Your location]</span>
+            <span class="c-val">Railway Road, Dalkey, Dublin</span>
           </div>
           <div class="contact-row">
             <span class="c-label">Hours</span>
